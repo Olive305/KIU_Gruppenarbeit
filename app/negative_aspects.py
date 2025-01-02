@@ -5,7 +5,6 @@ class ReviewAnalyzer:
     def __init__(self):
         # Initialize models
         self.sentiment_pipeline = pipeline("sentiment-analysis")
-        self.zero_shot_classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
         self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
         self.themes = ["Gameplay", "Visuals", "Performance", "Sound", "Story", "Controls", "Difficulty", "Replayability"]
 

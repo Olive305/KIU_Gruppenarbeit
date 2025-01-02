@@ -54,7 +54,7 @@ class ReviewClassifier:
         X_train, X_test, y_train, y_test = train_test_split(df['review'], df['rating'], test_size=0.1, random_state=42)
 
         # Text in numerical features
-        self.vectorizer = TfidfVectorizer(ngram_range=(1, 3), stop_words='english')  # Using bigrams and removing stop words
+        self.vectorizer = TfidfVectorizer(ngram_range=(1, 3), stop_words='english')
         X_train_vec = self.vectorizer.fit_transform(X_train)
         X_test_vec = self.vectorizer.transform(X_test)
 

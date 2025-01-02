@@ -1,11 +1,13 @@
 from negative_aspects import ReviewAnalyzer
 from recommended import ReviewClassifier
+
 import tkinter as tk
 from tkinter import ttk, filedialog
 import threading
 import time
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 def main():
     # Initialize variables for the analyzers
@@ -15,7 +17,7 @@ def main():
     # Create the main window
     root = tk.Tk()
     root.title("Game Review Analyzer")
-    root.geometry("600x400")
+    root.state('zoomed')
 
     # Create a frame to hold the widgets
     frame = ttk.Frame(root, padding="10")
@@ -28,12 +30,6 @@ def main():
     loading_label = ttk.Label(frame, text="Initializing...")
     loading_label.grid(row=0, column=0, sticky=tk.W, pady=(0, 5))
 
-    # Function to show a loading animation
-    def show_loading_animation(label):
-        while True:
-            for frame in ["|", "/", "-", "\\"]:
-                label.config(text=f"Loading {frame}")
-                time.sleep(0.1)
 
     # Function to initialize the analyzers
     def initialize_classes():
@@ -77,6 +73,10 @@ def main():
         negative_aspects_label = ttk.Label(manual_frame, text="Negative Aspects: ")
         negative_aspects_label.grid(row=4, column=0, sticky=tk.W, pady=(0, 5))
 
+        def rotate(canvas, arc, angle):
+            canvas.itemconfig(arc, start=angle)
+            canvas.update()
+
         # Function to run the analysis
         def run_analysis():
             review = review_text.get("1.0", tk.END).strip()
@@ -84,23 +84,18 @@ def main():
                 root.destroy()
                 return
 
-            loading_thread = threading.Thread(target=show_loading_animation, args=(loading_label,))
-            loading_thread.start()
+            def analyze():
+                recommendation = review_classifier.predict(review)
+                negative_aspects = aspects_analyzer.analyze_review(review)
+                return recommendation, negative_aspects
 
-            recommendation = review_classifier.predict(review)
+            recommendation, negative_aspects = analyze()
             recommendation_label.config(text=f"Recommendation: {recommendation}")
-
-            negative_aspects = aspects_analyzer.analyze_review(review)
-            negative_aspects_label.config(text=f"Negative Aspects: {', '.join(negative_aspects)}")
-
-            loading_thread.join()
-            loading_label.config(text="")
+            negative_aspects_label.config(text=f"Negative Aspects: {negative_aspects}")
 
         # Configure the analyze button to run the analysis in a separate thread
         analyze_button.config(command=lambda: threading.Thread(target=run_analysis).start())
         analyze_button.config(state=tk.NORMAL)
-        
-        
         # Multi File Part
 
         # Create a frame for CSV review analysis
@@ -156,21 +151,26 @@ def main():
                         negative_aspects_count[aspect] = 1
 
             recommended_count = recommendations.count('Recommended')
-            not_recommended_count = recommendations.count('Not Recommended')
             total_reviews = len(reviews)
 
-            result_text = (f"Recommended: {recommended_count / total_reviews * 100:.2f}%\n"
-                           f"Not Recommended: {not_recommended_count / total_reviews * 100:.2f}%")
+            result_text = (f"Recommended: {recommended_count / total_reviews * 100:.2f}%\n")
             csv_result_label.config(text=f"CSV Analysis Result:\n{result_text}")
 
-            plt.bar(negative_aspects_count.keys(), negative_aspects_count.values())
-            plt.xlabel('Negative Aspects')
-            plt.ylabel('Count')
-            plt.title('Negative Aspects Frequency')
-            plt.xticks(rotation=45)
-            plt.show()
+            # Create the plot
+            fig, ax = plt.subplots()
+            ax.bar(negative_aspects_count.keys(), negative_aspects_count.values())
+            ax.set_xlabel('Negative Aspects')
+            ax.set_ylabel('Count')
+            ax.set_title('Negative Aspects Frequency')
+            tick_positions = range(len(negative_aspects_count))  # Define tick positions
+            tick_labels = list(negative_aspects_count.keys())  # Define tick labels
+            ax.set_xticks(tick_positions)  # Set the tick positions
+            ax.set_xticklabels(tick_labels)  # Set the tick labels
 
-        open_file_button.config(command=open_file)
+            # Display the plot in the Tkinter window
+            canvas = FigureCanvasTkAgg(fig, master=csv_frame)
+            canvas.draw()
+            canvas.get_tk_widget().grid(row=2, column=0, columnspan=3, sticky=(tk.W, tk.E, tk.N, tk.S))
 
     # Start the initialization in a separate thread
     init_thread = threading.Thread(target=initialize_classes)
