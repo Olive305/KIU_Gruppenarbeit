@@ -9,12 +9,12 @@ class ReviewAnalyzer:
         self.themes = ["Gameplay", "Visuals", "Performance", "Sound", "Story", "Controls", "Difficulty", "Replayability"]
 
     def analyze_review(self, review):
-        # Split review into sentences and get embeddings
+        # Split sentences and get the embeddings
         sentences = review.split('.')
         sentence_embeddings = self.embedding_model.encode(sentences)
         theme_embeddings = self.embedding_model.encode(self.themes)
 
-        # Match sentences to themes using embeddings
+        # Match themes to each sentence
         relevant_themes = {theme: [] for theme in self.themes}
         for i, sentence_embedding in enumerate(sentence_embeddings):
             similarities = util.cos_sim(sentence_embedding, theme_embeddings)
