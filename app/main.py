@@ -16,7 +16,6 @@ def main():
     # Create the window
     root = tk.Tk()
     root.title("Game Review Analyzer")
-    root.state('zoomed')
 
     # Create a frame
     frame = ttk.Frame(root, padding="10")
