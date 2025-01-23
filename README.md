@@ -2,14 +2,14 @@
 
 ## Installation von Python und pip
 
-Springen Sie für die Installationsanleitung zu ihrem jeweiligen Betriebssystem.
+Beachten Sie die Installationseinleitung von Ihrem Betriebssystem.
 
 ### Windows
 
-1. Laden Sie den Python Installer von der [offiziellen Website](https://www.python.org/downloads/) herunter.
-2. Starten Sie das Installationsprogramm und überprüfen Sie, dass das Kästchen "Add Python to PATH" angeklickt wurde (Ansonsten wird man die Befehle nicht nutzen können).
+1. Herunterladen von Python von der [offiziellen Website](https://www.python.org/downloads/).
+2. Führen sie die heruntergeladene Installationsdatei aus und stellen Sie sicher, dass das Kästchen "Add Python to PATH" angeclickt ist
 
-Um zu testen, ob Python erfolgreich installiert wurde, öffnen Sie die Commandpromt und führen Sie die folgenden Befehle aus:
+Um zu testen, ob Python erfolgreich installiert führt man die folgenden Befehle in der Kommandozeile aus:
 ```sh
 python --version
 pip --version
@@ -18,17 +18,17 @@ Dies sollte die jeweiligen Versionen ausgeben.
 
 ### Linux
 
-1. Öffnen Sie ein Terminal.
-2. Aktualisieren Sie die Paketliste:
+1. Öffnen eines Terminals.
+2. Aktualisierung der Paketliste:
 ```sh
 sudo apt update
 ```
-3. Installieren Sie Python und pip:
+3. Installation von Python und pip:
 ```sh
 sudo apt install python3 python3-pip
 ```
 
-Um zu testen, ob Python erfolgreich installiert wurde, öffnen Sie das Terminal und führen Sie die folgenden Befehle aus:
+Um zu testen, ob Python erfolgreich installiert führt man die folgenden Befehle in der Konsole aus:
 ```sh
 python3 --version
 pip3 --version
@@ -37,14 +37,14 @@ Dies sollte die jeweiligen Versionen ausgeben.
 
 ### Mac
 
-1. Laden Sie den Python Installer von der [offiziellen Website](https://www.python.org/downloads/) herunter.
-2. Starten Sie das Installationsprogramm und überprüfen Sie, dass das Kästchen "Add Python to PATH" angeklickt wurde (Möglicherweise bei Mac nicht notwendig).
+1. Herunterladen von Python von der [offiziellen Website](https://www.python.org/downloads/).
+2. Führen sie die heruntergeladene Installationsdatei aus und stellen Sie sicher, dass das Kästchen "Add Python to PATH" angeclickt ist (Möglicherweise bei Mac nicht nötig).
 3. Alternativ kann Homebrew verwenden werden, um Python zu installieren:
 ```sh
 brew install python
 ```
 
-Um zu testen, ob Python erfolgreich installiert wurde, öffnen Sie das Terminal und führen Sie die folgenden Befehle aus:
+Um zu testen, ob Python erfolgreich installiert führt man die folgenden Befehle in der Konsole aus:
 ```sh
 python3 --version
 pip3 --version
@@ -54,11 +54,11 @@ Dies sollte die jeweiligen Versionen ausgeben.
 
 ## Installation von Abhängigkeiten
 
-1. Navigieren Sie zu dem Ordner mit dem Code:
+1. Navigigation zu dem Ordner mit dem Code:
 ```sh
 cd /path/to/your/project
 ```
-2. Installieren Sie die in `requirements.txt` angegebenen Abhängigkeiten:
+2. Installation der in `requirements.txt` angegebenen Abhängigkeiten:
 ```sh
 pip install -r requirements.txt
 ```
