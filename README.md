@@ -74,3 +74,6 @@ oder bei Windows:
 python app/main.py
 ```
 Die Datei `main.py` befindet sich im Ordner `app` und muss von dort aus ausgeführt werden.
+
+
+Bei weiteren Fragen kann man mich auf oliverweingardt3@gmail.com erreichen.
